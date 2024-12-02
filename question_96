@@ -1,0 +1,3 @@
+a. Sim, é comum que uma classe Banco centralize cadastros e regras de negócio, mas separar responsabilidades melhora a manutenibilidade.
+b. Sim, seria mais adequado dividir as responsabilidades em classes como CadastroDeClientes e CadastroDeContas, com o Banco delegando tarefas e mantendo métodos simples.
+c. O método associar cliente a uma conta deveria estar na classe CadastroDeContas, já que o vínculo está mais relacionado à gestão de contas.
