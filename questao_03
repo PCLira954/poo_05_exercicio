@@ -1,0 +1,67 @@
+class Banco {
+  private clientes: Cliente[]
+  private contas: Conta[]
+
+  constructor() {
+    this.clientes = []
+    this.contas = []
+  }
+
+
+  inserirCliente(cliente: Cliente): void {
+    if (this.clientes.some(c => c.id === cliente.id || c.cpf === cliente.cpf)) {
+      throw new Error("Cliente com o mesmo ID ou CPF já existe.")
+    }
+    this.clientes.push(cliente)
+  }
+
+  // Método para consultar cliente pelo CPF
+  consultarCliente(cpf: string): Cliente {
+    const cliente = this.clientes.find(c => c.cpf === cpf)
+    if (!cliente) {
+      throw new Error("Cliente não encontrado.")
+    }
+    return cliente
+  }
+
+  // Método para associar uma conta a um cliente
+  associarContaCliente(numeroConta: string, cpfCliente: string): void {
+    const cliente = this.consultarCliente(cpfCliente)
+    const conta = this.contas.find(c => c.numero === numeroConta)
+
+    if (!conta) {
+      throw new Error("Conta não encontrada.")
+    }
+
+    if (conta.cliente) {
+      throw new Error("A conta já está associada a um cliente.")
+    }
+
+    if (cliente.contas.includes(conta)) {
+      throw new Error("O cliente já possui esta conta associada.")
+    }
+
+    conta.cliente = cliente;
+    cliente.contas.push(conta)
+  }
+
+  
+  listarContasCliente(cpf: string): Conta[] {
+    const cliente = this.consultarCliente(cpf)
+    return cliente.contas
+  }
+
+
+  totalizarSaldoCliente(cpf: string): number {
+    const cliente = this.consultarCliente(cpf)
+    return cliente.contas.reduce((total, conta) => total + conta.saldo, 0)
+  }
+
+
+  inserirConta(conta: Conta): void {
+    if (this.contas.some(c => c.id === conta.id || c.numero === conta.numero)) {
+      throw new Error("Conta com o mesmo ID ou número já existe.")
+    }
+    this.contas.push(conta)
+  }
+}
