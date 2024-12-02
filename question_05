@@ -1,0 +1,27 @@
+
+const banco = new Banco()
+
+const cliente1 = new Cliente(1, "Maria Silva", "123.456.789-00", new Date(1980, 5, 15))
+const cliente2 = new Cliente(2, "João Souza", "987.654.321-00", new Date(1990, 10, 25))
+
+
+banco.inserirCliente(cliente1)
+banco.inserirCliente(cliente2)
+
+
+const conta1 = new Conta(1, "0001", 500)
+const conta2 = new Conta(2, "0002", 300)
+
+
+banco.inserirConta(conta1)
+banco.inserirConta(conta2)
+
+
+banco.associarContaCliente("0001", "123.456.789-00")
+banco.associarContaCliente("0002", "987.654.321-00")
+
+
+console.log(banco.listarContasCliente("123.456.789-00"))
+
+
+console.log(banco.totalizarSaldoCliente("123.456.789-00"))
